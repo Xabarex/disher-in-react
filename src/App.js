@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"
+import DrawButton from "./components/DrawButton"
+import FilterSection from "./components/FilterSection"
+import { randomInt } from "./random-lib"
 
-function App() {
+
+function App(props) {
+  const meals = props.meals
+  const [pickedMeal, drawMeal] = useState('Tutaj pojawi się wylosowane danie')
+
+  function pickMeal(mealsArrayFromProps) {
+    console.log(props)
+    let indexOfPickedMeal = randomInt(0, mealsArrayFromProps.length)
+    drawMeal(mealsArrayFromProps[indexOfPickedMeal].name)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div className="main-space">
+      <h1>Wylosuj sobie jedzonko</h1>
+      <FilterSection />
+      <DrawButton onDrawClick={() => pickMeal(meals)} />
+      <p>{pickedMeal}</p>
+    </div>    
+  )
 }
 
-export default App;
+export default App
